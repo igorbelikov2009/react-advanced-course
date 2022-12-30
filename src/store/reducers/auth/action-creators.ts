@@ -25,7 +25,7 @@ export const AuthActionCreators = {
         // Будем искать пользователя, у которого username равен тому, что мы ввели в форму,
         // и сразу же проверяем, чтобы у этого пользователя был такой же пароль.
         const mockUsers = response.data.find((user) => user.username === username && user.password === password);
-        console.log("Ok", mockUsers);
+        // console.log("Ok", mockUsers);
         if (mockUsers) {
           localStorage.setItem("auth", "true");
           localStorage.setItem("username", mockUsers.username);

@@ -2,22 +2,15 @@ import React, { FC } from "react";
 import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useAction } from "../hooks/useAction";
 import { useAppSelector } from "../hooks/useAppSelector";
 import { RouteNames } from "../router/router";
-import { AuthActionCreators } from "../store/reducers/auth/action-creators";
 
 const NavBar: FC = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
   const { isAuth, user } = useAppSelector((state) => state.auth);
-
-  const logout: React.MouseEventHandler = () => {
-    dispatch(AuthActionCreators.logout());
-    history.push(RouteNames.EVENT);
-    console.log("logout");
-  };
+  const { logout } = useAction();
 
   return (
     <Navbar bg="dark" variant="dark" className="navbar">
