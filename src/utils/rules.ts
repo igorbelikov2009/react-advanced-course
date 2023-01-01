@@ -1,5 +1,6 @@
 export const rules = {
-  required: (message: string) => ({
+  // дефолтное значение ="Обяательное поле"
+  required: (message: string = "Обяательное поле") => ({
     required: true,
     message,
   }),

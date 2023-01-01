@@ -9,7 +9,8 @@ import { SetAuthAction, SetIsLoadingAction, AuthActionEnum, SetUserAction, SetEr
 // У экшена есть какой-то type и какой-то Payload.
 
 import { IUser } from "../../../models/IUser";
-import axios from "axios";
+// import axios from "axios";
+import UserService from "../../../api/UserService";
 
 export const AuthActionCreators = {
   setUser: (user: IUser): SetUserAction => ({ type: AuthActionEnum.SET_USER, payload: user }),
@@ -21,7 +22,8 @@ export const AuthActionCreators = {
     try {
       dispatch(AuthActionCreators.setIsLoading(true));
       setTimeout(async () => {
-        const response = await axios.get<IUser[]>("./users.json");
+        // const response = await axios.get<IUser[]>("./users.json"); // до создания  api.UserService.ts
+        const response = await UserService.getUsers(); // после создания  api.UserService.ts
         // Будем искать пользователя, у которого username равен тому, что мы ввели в форму,
         // и сразу же проверяем, чтобы у этого пользователя был такой же пароль.
         const mockUsers = response.data.find((user) => user.username === username && user.password === password);
