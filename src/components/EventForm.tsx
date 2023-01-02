@@ -10,11 +10,12 @@ import { rules } from "../utils/rules";
 
 interface EventFormProps {
   guests: IUser[];
+  submit: (event: IEvent) => void;
 }
 
-// мы не принимаем guests состоянием, а принимаем пропсами
+// Мы не принимаем guests из интерфейса состоянием, а принимаем пропсами
 // для того, чтобы эту форму можно было переиспользовать в
-// другом месте приложения и у нас был другой список полльзователей.
+// другом месте приложения и у нас был другой список пользователей.
 const EventForm: FC<EventFormProps> = (props) => {
   const [event, setEvent] = useState<IEvent>({ author: "", date: "", description: "", guest: "" } as IEvent);
   const { user } = useAppSelector((state) => state.auth);
@@ -27,7 +28,10 @@ const EventForm: FC<EventFormProps> = (props) => {
   };
 
   const submitForm = () => {
-    console.log(event);
+    // С помощью колбека мы будем отдавать созданный event на уровень выше: в родительский компонент.
+    // Таким образом, логику submitForm() обрабатывает родительский компонент: Event.tsx
+    props.submit({ ...event, author: user.username });
+    // console.log({ ...event, author: user.username });
   };
 
   return (
@@ -36,6 +40,7 @@ const EventForm: FC<EventFormProps> = (props) => {
         <Input onChange={(e) => setEvent({ ...event, description: e.target.value })} value={event.description} />
       </Form.Item>
 
+      {/* , rules.isDateAfter("Нельзя создать событие в прошлом") */}
       <Form.Item label="Дата события" name="date" rules={[rules.required()]}>
         <DatePicker onChange={(date) => selectDate(date)} />
       </Form.Item>

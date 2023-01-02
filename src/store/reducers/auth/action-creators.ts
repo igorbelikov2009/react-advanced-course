@@ -31,9 +31,10 @@ export const AuthActionCreators = {
         if (mockUsers) {
           localStorage.setItem("auth", "true");
           localStorage.setItem("username", mockUsers.username);
-          dispatch(AuthActionCreators.setIsAuth(true));
+
           // передаём найденного по username и password пользователя mockUsers из массива
           dispatch(AuthActionCreators.setUser(mockUsers));
+          dispatch(AuthActionCreators.setIsAuth(true));
         } else {
           //  Если нет пользователя с таким username и password
           dispatch(AuthActionCreators.setError("Некорректный логин или пароль"));
